@@ -127,7 +127,7 @@ class CRM_Banking_PluginImpl_Matcher_RegexAnalyser extends CRM_Banking_PluginMod
         $this->logMessage("RegexAnalyser - Cannot find source '$key' for rule or filter.", 'debug');
       }
 
-      return NULL;
+      return $value;
     }
   }
 
