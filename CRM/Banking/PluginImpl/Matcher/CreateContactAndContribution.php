@@ -297,12 +297,9 @@ class CRM_Banking_PluginImpl_Matcher_CreateContactAndContribution extends CRM_Ba
    */
   private function get_contact_name_parts($full_name, $contact_type) {
     // extract formal title from $full_name
-    $formal_titles = [
-      '/prof\.\s+dr\./',
-      '/dr\./',
-    ];
+    $regex_list = $this->getFormalTitles();
     $formal_title = NULL;
-    foreach ($formal_titles as $regex) {
+    foreach ($regex_list as $regex) {
       preg_match($regex, strtolower($full_name), $matches, PREG_OFFSET_CAPTURE);
       if (!empty($matches)) {
         $offset = $matches[0][1];
@@ -366,37 +363,9 @@ class CRM_Banking_PluginImpl_Matcher_CreateContactAndContribution extends CRM_Ba
    *   either 'Organization' or 'Individual'
    */
   private function get_contact_type($full_name) {
-    $organization_match_words = [
-      '/gmbh/',
-      '/beratung/',
-      '/coaching/',
-      '/training/',
-      '/consulting/',
-      '/agentur/',
-      '/büro/',
-      '/buero/',
-      '/development/',
-      '/agile/',
-      '/system/',
-      '/service/',
-      '/academy/',
-      '/institut/',
-      '/marketing/',
-      '/dienstleistung/',
-      '/stiftung/',
-      '/praxis/',
-      '/club/',
-      '/e\.\s*v\./',
-      '/ mbh /',
-      '/e\.\s*k\./',
-      '/ gbr /',
-      '/ ag /',
-      '/ gug /',
-      '/ ug /',
-      '/ lab /',
-    ];
+    $regex_list = $this->getOrganizationRegex();
 
-    foreach ($organization_match_words as $regex) {
+    foreach ($regex_list as $regex) {
       preg_match($regex, strtolower($full_name), $matches);
       if (!empty($matches)) {
         return 'Organization';
@@ -406,6 +375,26 @@ class CRM_Banking_PluginImpl_Matcher_CreateContactAndContribution extends CRM_Ba
     // if we reach this code here, it's not an organization
     // TODO: check for household
     return 'Individual';
+  }
+
+  public function getOrganizationRegex() {
+    if (isset($this->_plugin_config->organization_regex)) {
+      $regex_list = $this->_plugin_config->organization_regex;
+      return $regex_list;
+    }
+    else {
+      return NULL;
+    }
+  }
+
+    public function getFormalTitles() {
+    if (isset($this->_plugin_config->formal_titles)) {
+      $regex_list = $this->_plugin_config->formal_titles;
+      return $regex_list;
+    }
+    else {
+      return NULL;
+    }
   }
 
 }
