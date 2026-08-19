@@ -367,44 +367,43 @@ class CRM_Banking_PluginImpl_Matcher_CreateContactAndContribution extends CRM_Ba
    */
   private function get_contact_type($full_name) {
     $organization_match_words = [
-      'gmbh',
-      'beratung',
-      'coaching',
-      'training',
-      'consulting',
-      'agentur',
-      'büro',
-      'buero',
-      'development',
-      'agile',
-      'system',
-      'service',
-      'academy',
-      'institut',
-      'marketing',
-      'dienstleistung',
-      'stiftung',
-      'praxis',
-      'club',
-      'e.v.',
-      'e. v.',
-      ' mbh ',
-      'e.k.',
-      'e. k.',
-      ' gbr ',
-      ' ag ',
-      ' gug ',
-      ' ug ',
-      ' lab ',
+      '/gmbh/',
+      '/beratung/',
+      '/coaching/',
+      '/training/',
+      '/consulting/',
+      '/agentur/',
+      '/büro/',
+      '/buero/',
+      '/development/',
+      '/agile/',
+      '/system/',
+      '/service/',
+      '/academy/',
+      '/institut/',
+      '/marketing/',
+      '/dienstleistung/',
+      '/stiftung/',
+      '/praxis/',
+      '/club/',
+      '/e\.\s*v\./',
+      '/ mbh /',
+      '/e\.\s*k\./',
+      '/ gbr /',
+      '/ ag /',
+      '/ gug /',
+      '/ ug /',
+      '/ lab /',
     ];
 
-    foreach ($organization_match_words as $word) {
-      if (str_contains(strtolower($full_name), $word)) {
+    foreach ($organization_match_words as $regex) {
+      preg_match($regex, strtolower($full_name), $matches);
+      if (!empty($matches)) {
         return 'Organization';
       }
     }
 
-    // it's not an organization
+    // if we reach this code here, it's not an organization
     // TODO: check for household
     return 'Individual';
   }
