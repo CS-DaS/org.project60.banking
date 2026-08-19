@@ -165,6 +165,12 @@ class CRM_Banking_PluginImpl_Matcher_CreateContactAndContribution extends CRM_Ba
     $financial_types = CRM_Financial_BAO_FinancialType::getAvailableFinancialTypes();
     $contribution['financial_type'] = $financial_types[$contribution['financial_type_id']];
 
+    // look up campaign
+    if (!empty($contribution['campaign_id'])) {
+      $campaigns = civicrm_api4('Campaign', 'get', ['where' => [['id', '=', $contribution['campaign_id']], ], ]);
+      $smarty_vars['campaign'] = $campaigns[0];
+    }
+
     // assign source
     $smarty_vars['source']       = $contribution['source'] ?? NULL;
     $smarty_vars['source_label'] = $this->_plugin_config->source_label;
