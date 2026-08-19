@@ -68,7 +68,7 @@ class CRM_Banking_PluginImpl_Matcher_CreateContactAndContribution extends CRM_Ba
     }
 
     // and if we have a name
-    if (!isset($data_parsed['name']) or empty($data_parsed['name'])) {
+    if (!isset($data_parsed['name']) or empty($data_parsed['name']) or (count(explode(' ', $data_parsed['name'])) < 2)) {
       return NULL;
     }
 
