@@ -69,6 +69,16 @@ class CRM_Banking_PluginImpl_Matcher_CreateContactAndContribution extends CRM_Ba
       return [];
     }
 
+    // and if we have a financial_type_id
+    if (!isset($data_parsed['financial_type_id'])) {
+      return [];
+    }
+
+    // and if we have a payment_instrument_id
+    if (!isset($data_parsed['payment_instrument_id']) and !isset($data_parsed['payment_instrument'])) {
+      return [];
+    }
+
     // and if we have a name
     if (!isset($data_parsed['name']) or empty($data_parsed['name']) or (count(explode(' ', $data_parsed['name'])) < 2)) {
       return [];
