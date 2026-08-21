@@ -76,8 +76,6 @@ class CRM_Banking_PluginImpl_Matcher_CreateContactAndContribution extends CRM_Ba
     $suggestion = new CRM_Banking_Matcher_Suggestion($this, $btx);
     $suggestion->setTitle(E::ts('Create new contact and new contribution'));
     $suggestion->setId("create-contact-and-contribution");
-    $suggestion->setParameter('first_name', $first_name);
-    $suggestion->setParameter('last_name', $last_name);
     $suggestion->setProbability(1);
     $btx->addSuggestion($suggestion);
 

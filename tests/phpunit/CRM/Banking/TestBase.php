@@ -410,6 +410,28 @@ abstract class CRM_Banking_TestBase extends TestCase implements HeadlessInterfac
     }
   }
 
+    /**
+   * Get the latest contact.
+   *
+   * @return array The contact.
+   */
+  protected function getLatestContact() {
+    try {
+      return $this->callAPISuccessGetSingle(
+          'Contact',
+          [
+            'options' => [
+              'sort'  => 'id DESC',
+              'limit' => 1,
+            ],
+          ]
+      );
+    }
+    catch (Exception $ex) {
+      return NULL;
+    }
+  }
+
   /**
    * Create a matcher and return its ID.
    *
