@@ -25,6 +25,8 @@ class CRM_Banking_PluginImpl_Matcher_CreateContactAndContribution extends CRM_Ba
 
   /**
    * class constructor
+   *
+   * @param string $config_name
    */
   public function __construct($config_name) {
     parent::__construct($config_name);
