@@ -165,7 +165,7 @@ class CRM_Banking_PluginImpl_Matcher_CreateContactAndContribution extends CRM_Ba
 
     // look up campaign
     if (!empty($contribution['campaign_id'])) {
-      $campaigns = civicrm_api4('Campaign', 'get', ['where' => [['id', '=', $contribution['campaign_id']], ], ]);
+      $campaigns = civicrm_api4('Campaign', 'get', ['where' => [['id', '=', $contribution['campaign_id']]]]);
       $smarty_vars['campaign'] = $campaigns[0];
     }
 
@@ -385,7 +385,7 @@ class CRM_Banking_PluginImpl_Matcher_CreateContactAndContribution extends CRM_Ba
     }
   }
 
-    public function getFormalTitles() {
+  public function getFormalTitles() {
     if (isset($this->_plugin_config->formal_titles)) {
       $regex_list = $this->_plugin_config->formal_titles;
       return $regex_list;
